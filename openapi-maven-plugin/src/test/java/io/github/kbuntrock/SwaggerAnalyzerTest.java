@@ -7,6 +7,7 @@ import io.github.kbuntrock.configuration.library.TagAnnotation;
 import io.github.kbuntrock.resources.endpoint.swagger.ApiResponseResource;
 import io.github.kbuntrock.resources.endpoint.swagger.EntityAnnotationResource;
 import io.github.kbuntrock.resources.endpoint.swagger.EntityAnnotationWithParametersResource;
+import io.github.kbuntrock.resources.endpoint.swagger.SecurityAnnotationResource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
@@ -126,6 +127,19 @@ public class SwaggerAnalyzerTest extends AbstractTest {
 		javadocConfiguration
 			.setScanLocations(Collections.singletonList("src/test/java/io/github/kbuntrock/resources/endpoint/swagger"));
 		mojo.setJavadocConfiguration(javadocConfiguration);
+		checkGenerationResult(mojo.documentProject());
+	}
+
+	@Test
+	public void basicSecurityAnnotations() throws MojoFailureException, IOException, MojoExecutionException {
+		final DocumentationMojo mojo = createBasicMojo(SecurityAnnotationResource.class.getCanonicalName());
+		checkGenerationResult(mojo.documentProject());
+	}
+
+	@Test
+	public void jakartaBasicSecurityAnnotations()
+		throws MojoFailureException, IOException, MojoExecutionException {
+		final DocumentationMojo mojo = createBasicJakartaMojo(SecurityAnnotationResource.class.getCanonicalName());
 		checkGenerationResult(mojo.documentProject());
 	}
 }
